@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The VELQIN Wear</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f4f9; color: #333; }
+        header { background: #1a1a1a; color: #fff; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 24px; font-weight: bold; color: #ff4757; }
+        .cart-btn { background: #ff4757; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
+        .hero { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://picsum.photos/1200/400'); background-size: cover; color: white; text-align: center; padding: 80px 20px; }
+        .hero h1 { font-size: 40px; margin-bottom: 10px; }
+        .products { padding: 40px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; padding-bottom: 15px; }
+        .card img { width: 100%; height: 250px; object-fit: cover; }
+        .card h3 { margin: 15px 0 5px; font-size: 18px; }
+        .card p { color: #2ed573; font-weight: bold; font-size: 16px; margin-bottom: 10px; }
+        .buy-btn { background: #2f3542; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; transition: 0.3s; }
+        .buy-btn:hover { background: #ff4757; }
+        footer { background: #1a1a1a; color: white; text-align: center; padding: 20px; margin-top: 40px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">The VELQIN Wear</div>
+        <button class="cart-btn" onclick="alert('আপনার কার্টে পণ্য যুক্ত হয়েছে!')">🛒 Cart (<span id="cart-count">0</span>)</button>
+    </header>
+
+    <section class="hero">
+        <h1>Welcome to The VELQIN Wear</h1>
+        <p>Premium Quality Fashion & Clothing Collections</p>
+    </section>
+
+    <section class="products">
+        <div class="card">
+            <img src="https://picsum.photos/300/400?random=1" alt="Product">
+            <h3>Premium Black T-Shirt</h3>
+            <p>৳ 750</p>
+            <button class="buy-btn" onclick="orderWhatsApp('Premium Black T-Shirt', 750)">WhatsApp-এ অর্ডার করুন</button>
+        </div>
+        <div class="card">
+            <img src="https://picsum.photos/300/400?random=2" alt="Product">
+            <h3>Casual Denim Shirt</h3>
+            <p>৳ 1,250</p>
+            <button class="buy-btn" onclick="orderWhatsApp('Casual Denim Shirt', 1250)">WhatsApp-এ অর্ডার করুন</button>
+        </div>
+        <div class="card">
+            <img src="https://picsum.photos/300/400?random=3" alt="Product">
+            <h3>Stylish Polo Shirt</h3>
+            <p>৳ 850</p>
+            <button class="buy-btn" onclick="orderWhatsApp('Stylish Polo Shirt', 850)">WhatsApp-এ অর্ডার করুন</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 The VELQIN Wear. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        let count = 0;
+        function orderWhatsApp(productName, price) {
+            count++;
+            document.getElementById('cart-count').innerText = count;
+            let phone = "8801700000000"; // এখানে আপনার হোয়াটসঅ্যাপ নম্বর দিন
+            let message = `Hello, I want to order ${productName} for BDT ${price}.`;
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+    </script>
+</body>
+</html>
