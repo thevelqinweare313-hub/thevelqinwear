@@ -3,71 +3,317 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The VELQIN Wear</title>
+    <title>The VELQIN Wear - Premium Fashion</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #0f172a;
+            --accent-color: #e11d48;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+        }
+
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f4f4f9; color: #333; }
-        header { background: #1a1a1a; color: #fff; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 24px; font-weight: bold; color: #ff4757; }
-        .cart-btn { background: #ff4757; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
-        .hero { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://picsum.photos/1200/400'); background-size: cover; color: white; text-align: center; padding: 80px 20px; }
-        .hero h1 { font-size: 40px; margin-bottom: 10px; }
-        .products { padding: 40px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; padding-bottom: 15px; }
-        .card img { width: 100%; height: 250px; object-fit: cover; }
-        .card h3 { margin: 15px 0 5px; font-size: 18px; }
-        .card p { color: #2ed573; font-weight: bold; font-size: 16px; margin-bottom: 10px; }
-        .buy-btn { background: #2f3542; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; transition: 0.3s; }
-        .buy-btn:hover { background: #ff4757; }
-        footer { background: #1a1a1a; color: white; text-align: center; padding: 20px; margin-top: 40px; }
+        body { background-color: var(--bg-color); color: var(--text-color); }
+
+        /* Header */
+        header { background: var(--primary-color); color: white; padding: 18px 8%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .logo { font-size: 26px; font-weight: 800; letter-spacing: 1.5px; color: #fff; }
+        .logo span { color: var(--accent-color); }
+
+        /* Hero Section */
+        .hero { background: linear-gradient(rgba(15,23,42,0.85), rgba(15,23,42,0.85)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200') center/cover; color: white; text-align: center; padding: 100px 20px; }
+        .hero h1 { font-size: 45px; margin-bottom: 12px; font-weight: 700; }
+        .hero p { font-size: 18px; color: #cbd5e1; }
+
+        /* Products Grid */
+        .products-section { padding: 50px 8%; }
+        .section-title { text-align: center; font-size: 30px; margin-bottom: 35px; color: var(--primary-color); position: relative; }
+        .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        
+        .card { background: var(--card-bg); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); transition: 0.3s; position: relative; border: 1px solid #e2e8f0; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .card img { width: 100%; height: 320px; object-fit: cover; }
+        .card-body { padding: 20px; text-align: center; }
+        .card h3 { font-size: 20px; margin-bottom: 8px; color: var(--primary-color); }
+        .card .price { color: var(--accent-color); font-weight: 700; font-size: 22px; margin-bottom: 12px; }
+        .card .meta { font-size: 13px; color: #64748b; margin-bottom: 18px; }
+        
+        .order-btn { background: var(--accent-color); color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%; font-size: 15px; transition: 0.3s; }
+        .order-btn:hover { background: #be123c; }
+
+        /* Order Form Modal */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 480px; position: relative; }
+        .modal-content h3 { margin-bottom: 20px; color: var(--primary-color); }
+        .modal-content input, .modal-content textarea, .modal-content select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; }
+        .submit-btn { background: #10b981; color: white; border: none; padding: 14px; border-radius: 6px; cursor: pointer; width: 100%; font-weight: 700; font-size: 16px; margin-top: 15px; }
+
+        /* Admin Floating Button */
+        .admin-fab { position: fixed; bottom: 25px; right: 25px; background: var(--primary-color); color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-size: 22px; z-index: 999; }
+
+        /* Admin Panel Modal */
+        .admin-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1001; justify-content: center; align-items: center; }
+        .admin-box { background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 600px; max-height: 85vh; overflow-y: auto; }
+
+        /* Success Popup */
+        .success-popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 35px; border-radius: 15px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 2000; width: 85%; max-width: 400px; }
+        .success-popup i { font-size: 60px; color: #10b981; margin-bottom: 15px; }
+
+        footer { background: var(--primary-color); color: #94a3b8; text-align: center; padding: 25px; margin-top: 50px; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">The VELQIN Wear</div>
-        <button class="cart-btn" onclick="alert('আপনার কার্টে পণ্য যুক্ত হয়েছে!')">🛒 Cart (<span id="cart-count">0</span>)</button>
+        <div class="logo">THE <span>VELQIN</span> WEAR</div>
+        <div style="color: #cbd5e1; font-size: 14px;"><i class="fa-solid fa-truck-fast"></i> Cash on Delivery Nationwide</div>
     </header>
 
     <section class="hero">
-        <h1>Welcome to The VELQIN Wear</h1>
-        <p>Premium Quality Fashion & Clothing Collections</p>
+        <h1>Exclusive Collection 2026</h1>
+        <p>Upgrade Your Style With Premium Apparel</p>
     </section>
 
-    <section class="products">
-        <div class="card">
-            <img src="https://picsum.photos/300/400?random=1" alt="Product">
-            <h3>Premium Black T-Shirt</h3>
-            <p>৳ 750</p>
-            <button class="buy-btn" onclick="orderWhatsApp('Premium Black T-Shirt', 750)">WhatsApp-এ অর্ডার করুন</button>
-        </div>
-        <div class="card">
-            <img src="https://picsum.photos/300/400?random=2" alt="Product">
-            <h3>Casual Denim Shirt</h3>
-            <p>৳ 1,250</p>
-            <button class="buy-btn" onclick="orderWhatsApp('Casual Denim Shirt', 1250)">WhatsApp-এ অর্ডার করুন</button>
-        </div>
-        <div class="card">
-            <img src="https://picsum.photos/300/400?random=3" alt="Product">
-            <h3>Stylish Polo Shirt</h3>
-            <p>৳ 850</p>
-            <button class="buy-btn" onclick="orderWhatsApp('Stylish Polo Shirt', 850)">WhatsApp-এ অর্ডার করুন</button>
-        </div>
+    <section class="products-section">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="products" id="productList"></div>
     </section>
+
+    <!-- Customer Order Modal -->
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <span style="position: absolute; right: 20px; top: 15px; cursor: pointer; font-size: 20px;" onclick="closeOrderModal()">&times;</span>
+            <h3 id="modalProdTitle">Order Product</h3>
+            <form id="checkoutForm" onsubmit="handleOrderSubmit(event)">
+                <input type="hidden" id="ordProductName">
+                <input type="hidden" id="ordProductPrice">
+                
+                <input type="text" id="custName" placeholder="আপনার নাম (Full Name)" required>
+                <input type="tel" id="custPhone" placeholder="মোবাইল নম্বর (Phone Number)" required>
+                <textarea id="custAddress" placeholder="সম্পূর্ণ ঠিকানা (Full Delivery Address)" rows="3" required></textarea>
+                
+                <label style="font-size: 13px; font-weight: 600; display: block; margin-top: 10px;">ডেলিভারি চার্জ:</label>
+                <select id="deliveryCharge" onchange="calculateTotal()" required>
+                    <option value="60">ঢাকার ভেতরে (৳ 60)</option>
+                    <option value="120">ঢাকার বাইরে (৳ 120)</option>
+                </select>
+
+                <label style="font-size: 13px; font-weight: 600; display: block; margin-top: 10px;">পেমেন্ট মেথড:</label>
+                <select id="paymentMethod" required>
+                    <option value="Cash on Delivery">Cash on Delivery (ক্যাশ অন ডেলিভারি)</option>
+                    <option value="bKash / Nagad">bKash / Nagad Online Payment</option>
+                </select>
+
+                <div style="margin: 15px 0; font-size: 16px; font-weight: bold; color: var(--accent-color);" id="totalAmountText">
+                    সর্বমোট: ৳ 0
+                </div>
+
+                <button type="submit" class="submit-btn">অর্ডার নিশ্চিত করুন</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Popup -->
+    <div class="success-popup" id="successPopup">
+        <i class="fa-solid fa-circle-check"></i>
+        <h2>অর্ডার সফল হয়েছে!</h2>
+        <p style="margin-top: 10px; color: #64748b;">ধন্যবাদ! আপনার অর্ডারটি গ্রহণ করা হয়েছে। খুব শীঘ্রই আমরা আপনার সাথে যোগাযোগ করব।</p>
+        <button onclick="closeSuccessPopup()" style="margin-top: 20px; background: var(--primary-color); color: white; border: none; padding: 10px 25px; border-radius: 6px; cursor: pointer;">ঠিক আছে</button>
+    </div>
+
+    <!-- Admin Floating Button -->
+    <div class="admin-fab" onclick="openAdminModal()" title="Admin Control">
+        <i class="fa-solid fa-gear"></i>
+    </div>
+
+    <!-- Admin Modal -->
+    <div class="admin-modal" id="adminModal">
+        <div class="admin-box">
+            <span style="float: right; cursor: pointer; font-size: 22px;" onclick="closeAdminModal()">&times;</span>
+            <h2>Admin Settings</h2>
+            <hr style="margin: 15px 0;">
+            
+            <div id="adminAuth">
+                <p style="margin-bottom: 10px;">পাসওয়ার্ড দিন:</p>
+                <input type="password" id="adminPass" placeholder="Password" style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                <button onclick="checkAdminPass()" style="width: 100%; padding: 10px; background: var(--primary-color); color: white; border: none; border-radius: 5px; cursor: pointer;">Login</button>
+            </div>
+
+            <div id="adminControls" style="display: none;">
+                <h3>Add New Product</h3>
+                <input type="text" id="pName" placeholder="Product Name" style="width:100%; padding:8px; margin:5px 0;">
+                <input type="number" id="pPrice" placeholder="Price (BDT)" style="width:100%; padding:8px; margin:5px 0;">
+                <input type="text" id="pSizes" placeholder="Sizes (e.g. M, L, XL)" style="width:100%; padding:8px; margin:5px 0;">
+                <input type="text" id="pColors" placeholder="Colors (e.g. Black, White)" style="width:100%; padding:8px; margin:5px 0;">
+                <input type="text" id="pImg" placeholder="Image URL" style="width:100%; padding:8px; margin:5px 0;">
+                <button onclick="addProduct()" style="width: 100%; padding: 10px; background: #10b981; color: white; border: none; margin-top: 10px; cursor: pointer; border-radius: 5px;">Save Product</button>
+                
+                <h3 style="margin-top: 25px;">Manage Existing Products</h3>
+                <div id="adminProdList" style="margin-top: 10px;"></div>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <p>&copy; 2026 The VELQIN Wear. All Rights Reserved.</p>
     </footer>
 
     <script>
-        let count = 0;
-        function orderWhatsApp(productName, price) {
-            count++;
-            document.getElementById('cart-count').innerText = count;
-            let phone = "8801700000000"; // এখানে আপনার হোয়াটসঅ্যাপ নম্বর দিন
-            let message = `Hello, I want to order ${productName} for BDT ${price}.`;
-            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+        const ADMIN_PASSWORD = "velqinadmin313"; // Admin Panel Password
+        const TARGET_WHATSAPP = "8801609171784"; // Your WhatsApp Number
+
+        const defaultProducts = [
+            { id: 1, name: "Velqin Black Premium Edition T-Shirt", price: 850, sizes: "M, L, XL", colors: "Black", img: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500" },
+            { id: 2, name: "Casual Denim Collection Shirt", price: 1350, sizes: "L, XL", colors: "Blue", img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500" },
+            { id: 3, name: "Urban Smart Fit Polo Shirt", price: 950, sizes: "M, L", colors: "Navy, White", img: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=500" }
+        ];
+
+        let products = JSON.parse(localStorage.getItem('velqin_products')) || defaultProducts;
+
+        function loadProducts() {
+            const container = document.getElementById('productList');
+            container.innerHTML = '';
+            products.forEach((p, idx) => {
+                container.innerHTML += `
+                    <div class="card">
+                        <img src="${p.img}" alt="${p.name}">
+                        <div class="card-body">
+                            <h3>${p.name}</h3>
+                            <div class="price">৳ ${p.price}</div>
+                            <div class="meta">Sizes: ${p.sizes} | Color: ${p.colors}</div>
+                            <button class="order-btn" onclick="openOrderModal(${idx})">অর্ডার করুন</button>
+                        </div>
+                    </div>
+                `;
+            });
         }
+
+        let selectedProduct = null;
+        function openOrderModal(index) {
+            selectedProduct = products[index];
+            document.getElementById('modalProdTitle').innerText = selectedProduct.name;
+            document.getElementById('ordProductName').value = selectedProduct.name;
+            document.getElementById('ordProductPrice').value = selectedProduct.price;
+            document.getElementById('orderModal').style.display = 'flex';
+            calculateTotal();
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+
+        function calculateTotal() {
+            const price = parseFloat(document.getElementById('ordProductPrice').value) || 0;
+            const delivery = parseFloat(document.getElementById('deliveryCharge').value) || 0;
+            const total = price + delivery;
+            document.getElementById('totalAmountText').innerText = `সর্বমোট: ৳ ${total}`;
+        }
+
+        function handleOrderSubmit(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('custName').value;
+            const phone = document.getElementById('custPhone').value;
+            const address = document.getElementById('custAddress').value;
+            const delivery = document.getElementById('deliveryCharge').value;
+            const payment = document.getElementById('paymentMethod').value;
+            const total = parseFloat(selectedProduct.price) + parseFloat(delivery);
+
+            // Construct Order Summary text
+            const orderText = `🛒 *NEW ORDER RECEIVED - The VELQIN Wear*\n\n` +
+                              `📦 *Product:* ${selectedProduct.name}\n` +
+                              `💰 *Price:* BDT ${selectedProduct.price}\n` +
+                              `🚚 *Delivery:* BDT ${delivery}\n` +
+                              `💵 *Total:* BDT ${total}\n` +
+                              `💳 *Payment:* ${payment}\n\n` +
+                              `👤 *Customer Name:* ${name}\n` +
+                              `📞 *Phone:* ${phone}\n` +
+                              `🏠 *Address:* ${address}`;
+
+            // Save order in local history
+            let orders = JSON.parse(localStorage.getItem('velqin_orders')) || [];
+            orders.push({ name, phone, address, product: selectedProduct.name, total, date: new Date().toLocaleString() });
+            localStorage.setItem('velqin_orders', JSON.stringify(orders));
+
+            // Direct trigger to WhatsApp API / Direct Link
+            const encodedText = encodeURIComponent(orderText);
+            
+            // Show Success Popup to Customer
+            closeOrderModal();
+            document.getElementById('successPopup').style.display = 'block';
+
+            // Automatic Dispatch to WhatsApp Web/App in background tab
+            window.open(`https://api.whatsapp.com/send?phone=${TARGET_WHATSAPP}&text=${encodedText}`, '_blank');
+        }
+
+        function closeSuccessPopup() {
+            document.getElementById('successPopup').style.display = 'none';
+        }
+
+        // Admin Panel Logic
+        function openAdminModal() {
+            document.getElementById('adminModal').style.display = 'flex';
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').style.display = 'none';
+        }
+
+        function checkAdminPass() {
+            const pass = document.getElementById('adminPass').value;
+            if(pass === ADMIN_PASSWORD) {
+                document.getElementById('adminAuth').style.display = 'none';
+                document.getElementById('adminControls').style.display = 'block';
+                renderAdminProducts();
+            } else {
+                alert('ভুল পাসওয়ার্ড!');
+            }
+        }
+
+        function addProduct() {
+            const name = document.getElementById('pName').value;
+            const price = document.getElementById('pPrice').value;
+            const sizes = document.getElementById('pSizes').value || 'M, L, XL';
+            const colors = document.getElementById('pColors').value || 'Standard';
+            const img = document.getElementById('pImg').value || 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500';
+
+            if(!name || !price) {
+                alert('Name & Price required');
+                return;
+            }
+
+            products.push({ id: Date.now(), name, price, sizes, colors, img });
+            localStorage.setItem('velqin_products', JSON.stringify(products));
+            loadProducts();
+            renderAdminProducts();
+            alert('Product Added Successfully!');
+        }
+
+        function deleteProd(idx) {
+            if(confirm('Delete this product?')) {
+                products.splice(idx, 1);
+                localStorage.setItem('velqin_products', JSON.stringify(products));
+                loadProducts();
+                renderAdminProducts();
+            }
+        }
+
+        function renderAdminProducts() {
+            const box = document.getElementById('adminProdList');
+            box.innerHTML = '';
+            products.forEach((p, idx) => {
+                box.innerHTML += `
+                    <div style="display:flex; justify-content:space-between; align-items:center; background:#f1f5f9; padding:8px 12px; margin-bottom:5px; border-radius:5px;">
+                        <span>${p.name} (৳${p.price})</span>
+                        <button onclick="deleteProd(${idx})" style="background:#ef4444; color:white; border:none; padding:4px 8px; border-radius:3px; cursor:pointer;">Delete</button>
+                    </div>
+                `;
+            });
+        }
+
+        loadProducts();
     </script>
 </body>
 </html>
